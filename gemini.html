@@ -1,0 +1,526 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Forever Story</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary-love: #ff4d6d;
+            --soft-pink: #fff0f3;
+            --text-gray: #4a4a4a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--soft-pink);
+            color: var(--text-gray);
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hidden { display: none; }
+
+        /* Opening Text Style */
+        .proposal-text {
+            font-size: 1.5rem;
+            line-height: 2;
+            color: var(--primary-love);
+            font-weight: 500;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: var(--primary-love);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover { transform: scale(1.05); }
+
+        /* Quiz Cards */
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            border: 2px solid var(--soft-pink);
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-btn:hover { background: var(--soft-pink); border-color: var(--primary-love); }
+
+        /* Memory Grid */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .memory-card {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .memory-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .memory-msg { font-size: 0.9rem; font-style: italic; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <div id="section-1">
+            <div id="proposal-lines" class="proposal-text"></div>
+            <button id="btn-1" class="btn hidden" onclick="nextSection(2)">Continue to Our Story</button>
+        </div>
+
+        <div id="section-2" class="hidden">
+            <h2 class="animate__animated animate__fadeIn">Our Love Story</h2>
+            <div id="story-lines" class="proposal-text"></div>
+            <button id="btn-2" class="btn hidden" onclick="nextSection(3)">Begin Valentine's Week</button>
+        </div>
+
+        <div id="section-3" class="hidden">
+            <div id="quiz-container" class="card">
+                <h3 id="day-title"></h3>
+                <p id="quiz-question"></p>
+                <div class="options-grid" id="options-container"></div>
+            </div>
+            
+            <div id="memory-display" class="hidden">
+                <div class="memory-grid" id="memory-grid"></div>
+                <button class="btn" onclick="nextDay()">Next Day</button>
+            </div>
+        </div>
+
+        <div id="section-4" class="hidden">
+            <h1 class="animate__animated animate__heartBeat animate__infinite" style="color: var(--primary-love);">You're my everything...</h1>
+        </div>
+    </div>
+
+    <script>
+        const proposalLines = [
+            "I may not know the perfect way to propose, but I know what my heart wants.",
+            "So I'll just come straight to the point.",
+            "I can't imagine my life without your smile.",
+            "I can't live without the sound of your laughter.",
+            "I can't live without your voice — the way it comforts me.",
+            "I can't live without your scent, the way it feels like home.",
+            "I can't live without your presence, because that's where my peace is.",
+            "You are my girl. You are my best friend. You are my lady.",
+            "You care for me like a mother.",
+            "You are my love, your my strength, my comfort in my eyes.",
+            "And to me… you are my queen. You will always be my queen.",
+            "You're the only Queen of my heart."
+        ];
+
+        const storyLines = [
+            "It all started with a simple hello...",
+            "Every moment since then has been a dream.",
+            "Through the highs and the lows, you were my anchor.",
+            "Today, I want to celebrate every bit of us."
+        ];
+
+        const weekData = [
+            { day: "Feb 7 – Rose Day 🌹", q: "Which color rose describes us best?", options: ["Red (Passion)", "White (Purity)"], memories: ["rose1.jpg", "rose2.jpg"], msg: "Like a rose, you make my life bloom." },
+            { day: "Feb 8 – Propose Day 💍", q: "Where was our most special moment?", options: ["The first date", "Every moment is special"], memories: ["date1.jpg"], msg: "Choosing you was the best decision of my life." },
+            { day: "Feb 9 – Chocolate Day 🍫", q: "How sweet is our love?", options: ["Dark & Rich", "Milk & Sweet"], memories: ["sweet1.jpg"], msg: "Life is sweeter with you." },
+            { day: "Feb 10 – Teddy Day 🧸", q: "What's my favorite thing to hug?", options: ["A giant teddy", "You, obviously"], memories: ["hug1.jpg"], msg: "You're my favorite comfort." },
+            { day: "Feb 11 – Promise Day 🤞", q: "What shall I promise you today?", options: ["Eternal loyalty", "Endless laughter"], memories: ["promise1.jpg"], msg: "I promise to hold your hand forever." },
+            { day: "Feb 12 – Hug Day 🤗", q: "How do your hugs feel?", options: ["Like home", "Like magic"], memories: ["home1.jpg"], msg: "Your arms are my favorite place." },
+            { day: "Feb 13 – Kiss Day 💋", q: "Remember our first kiss?", options: ["Yes, perfectly", "I want a new one!"], memories: ["kiss1.jpg"], msg: "Every kiss feels like the first." },
+            { day: "Feb 14 – Valentine's Day ❤️", q: "Are you ready for forever?", options: ["Yes!", "Absolutely Yes!"], memories: ["forever.jpg"], msg: "Will you be mine, forever?" }
+        ];
+
+        let currentDayIdx = 0;
+
+        function animateText(elementId, lines, btnId) {
+            const container = document.getElementById(elementId);
+            let lineIdx = 0;
+
+            const interval = setInterval(() => {
+                if (lineIdx < lines.length) {
+                    const p = document.createElement('p');
+                    p.className = 'animate__animated animate__fadeInUp';
+                    p.innerText = lines[lineIdx];
+                    container.appendChild(p);
+                    lineIdx++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById(btnId).classList.remove('hidden');
+                }
+            }, 1500);
+        }
+
+        function nextSection(num) {
+            document.querySelectorAll('#app > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(`section-${num}`).classList.remove('hidden');
+            if(num === 1) animateText('proposal-lines', proposalLines, 'btn-1');
+            if(num === 2) animateText('story-lines', storyLines, 'btn-2');
+            if(num === 3) loadQuiz();
+        }
+
+        function loadQuiz() {
+            const data = weekData[currentDayIdx];
+            document.getElementById('day-title').innerText = data.day;
+            document.getElementById('quiz-question').innerText = data.q;
+            document.getElementById('memory-display').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            
+            const optionsBox = document.getElementById('options-container');
+            optionsBox.innerHTML = '';
+            data.options.forEach(opt => {
+                const b = document.createElement('button');
+                b.className = 'option-btn';
+                b.innerText = opt;
+                b.onclick = () => showMemories(data);
+                optionsBox.appendChild(b);
+            });
+        }
+
+        function showMemories(data) {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const display = document.getElementById('memory-display');
+            display.classList.remove('hidden');
+            const grid = document.getElementById('memory-grid');
+            grid.innerHTML = '';
+
+            const animations = ['animate__zoomIn', 'animate__fadeInLeft', 'animate__bounceIn'];
+
+            data.memories.forEach(img => {
+                const mCard = document.createElement('div');
+                const randAnim = animations[Math.floor(Math.random() * animations.length)];
+                mCard.className = `memory-card animate__animated ${randAnim}`;
+                mCard.innerHTML = `<img src="${img}" alt="Memory"><p class="memory-msg">${data.msg}</p>`;
+                grid.appendChild(mCard);
+            });
+        }
+
+        function nextDay() {
+            currentDayIdx++;
+            if (currentDayIdx < weekData.length) {
+                loadQuiz();
+            } else {
+                nextSection(4);
+            }
+        }
+
+        // Initialize
+        window.onload = () => nextSection(1);
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Forever Story</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary-love: #ff4d6d;
+            --soft-pink: #fff0f3;
+            --text-gray: #4a4a4a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--soft-pink);
+            color: var(--text-gray);
+            overflow: hidden; /* Prevents scrollbars from the emoji rain */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Emoji Rain Styling */
+        .emoji-particle {
+            position: fixed;
+            top: -50px;
+            user-select: none;
+            pointer-events: none;
+            z-index: -1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+            background: rgba(255, 240, 243, 0.8); /* Semi-transparent background for readability */
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .hidden { display: none; }
+
+        .proposal-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--primary-love);
+            font-weight: 500;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: var(--primary-love);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            border: 2px solid var(--soft-pink);
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .memory-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <div id="section-1">
+            <div id="proposal-lines" class="proposal-text"></div>
+            <button id="btn-1" class="btn hidden" onclick="nextSection(2)">Continue to Our Story</button>
+        </div>
+
+        <div id="section-2" class="hidden">
+            <h2 class="animate__animated animate__fadeIn">Our Love Story</h2>
+            <div id="story-lines" class="proposal-text"></div>
+            <button id="btn-2" class="btn hidden" onclick="nextSection(3)">Begin Valentine's Week</button>
+        </div>
+
+        <div id="section-3" class="hidden">
+            <div id="quiz-container" class="card">
+                <h3 id="day-title"></h3>
+                <p id="quiz-question"></p>
+                <div class="options-grid" id="options-container"></div>
+            </div>
+            
+            <div id="memory-display" class="hidden">
+                <div class="memory-grid" id="memory-grid"></div>
+                <button class="btn" onclick="nextDay()">Next Day</button>
+            </div>
+        </div>
+
+        <div id="section-4" class="hidden">
+            <h1 class="animate__animated animate__heartBeat animate__infinite" style="color: var(--primary-love); font-size: 3rem;">
+                You're my everything... ❤️
+            </h1>
+        </div>
+    </div>
+
+    <script>
+        // Emoji Rain System
+        const emojis = ['❤️', '💖', '🍫', '🌹', '✨', '🧸', '💌'];
+        function createEmoji() {
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji-particle';
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + 'vw';
+            emoji.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.body.appendChild(emoji);
+            
+            setTimeout(() => { emoji.remove(); }, 5000);
+        }
+        setInterval(createEmoji, 300);
+
+        // Text Content
+        const proposalLines = [
+            "I may not know the perfect way to propose, but I know what my heart wants.",
+            "So I'll just come straight to the point.",
+            "I can't imagine my life without your smile.",
+            "I can't live without the sound of your laughter.",
+            "I can't live without your voice — the way it comforts me.",
+            "I can't live without your scent, the way it feels like home.",
+            "I can't live without your presence, because that's where my peace is.",
+            "You are my girl. You are my best friend. You are my lady.",
+            "You care for me like a mother.",
+            "You are my love, your my strength, my comfort in my eyes.",
+            "And to me… you are my queen. You will always be my queen.",
+            "You're the only Queen of my heart."
+        ];
+
+        const storyLines = [
+            "Every day with you is a new chapter of happiness.",
+            "From our first coffee to our long late-night talks...",
+            "You've become the best part of my every day.",
+            "Now, let's look back at our Valentine's journey together."
+        ];
+
+        const weekData = [
+            { day: "Feb 7 – Rose Day 🌹", q: "If our love were a rose, what would it be?", options: ["A wild, growing rose", "A perfectly bloomed one"], memories: ["rose1.jpg"], msg: "Your love is the fragrance of my life." },
+            { day: "Feb 8 – Propose Day 💍", q: "What was the moment you knew we were 'us'?", options: ["The first laugh", "The first deep talk"], memories: ["propose1.jpg"], msg: "I'd choose you in every lifetime." },
+            { day: "Feb 9 – Chocolate Day 🍫", q: "Which chocolate matches your personality?", options: ["Sweet Milk Chocolate", "Strong Dark Chocolate"], memories: ["choc1.jpg"], msg: "You're sweeter than any treat." },
+            { day: "Feb 10 – Teddy Day 🧸", q: "Who is the better cuddler?", options: ["You are!", "Definitely me"], memories: ["teddy1.jpg"], msg: "You're my forever cuddle partner." },
+            { day: "Feb 11 – Promise Day 🤞", q: "What is our pinky-promise forever?", options: ["Always be honest", "Always be together"], memories: ["promise1.jpg"], msg: "My promises to you are written in my heart." },
+            { day: "Feb 12 – Hug Day 🤗", q: "What does my hug feel like to you?", options: ["Safety", "Warmth"], memories: ["hug1.jpg"], msg: "In your arms, I am home." },
+            { day: "Feb 13 – Kiss Day 💋", q: "Where was our most romantic kiss?", options: ["Under the stars", "In the rain"], memories: ["kiss1.jpg"], msg: "Every kiss is a beautiful memory." },
+            { day: "Feb 14 – Valentine's Day ❤️", q: "Are you ready to be my Queen forever?", options: ["YES!", "A thousand times YES!"], memories: ["final1.jpg"], msg: "I love you more than words can say." }
+        ];
+
+        let currentDayIdx = 0;
+
+        function animateText(elementId, lines, btnId) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = '';
+            let lineIdx = 0;
+            const interval = setInterval(() => {
+                if (lineIdx < lines.length) {
+                    const p = document.createElement('p');
+                    p.className = 'animate__animated animate__fadeInUp';
+                    p.innerText = lines[lineIdx];
+                    container.appendChild(p);
+                    lineIdx++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById(btnId).classList.remove('hidden');
+                }
+            }, 2000);
+        }
+
+        function nextSection(num) {
+            document.querySelectorAll('#app > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(`section-${num}`).classList.remove('hidden');
+            if(num === 1) animateText('proposal-lines', proposalLines, 'btn-1');
+            if(num === 2) animateText('story-lines', storyLines, 'btn-2');
+            if(num === 3) loadQuiz();
+        }
+
+        function loadQuiz() {
+            const data = weekData[currentDayIdx];
+            document.getElementById('day-title').innerText = data.day;
+            document.getElementById('quiz-question').innerText = data.q;
+            document.getElementById('memory-display').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            
+            const optionsBox = document.getElementById('options-container');
+            optionsBox.innerHTML = '';
+            data.options.forEach(opt => {
+                const b = document.createElement('button');
+                b.className = 'option-btn animate__animated animate__fadeIn';
+                b.innerText = opt;
+                b.onclick = () => showMemories(data);
+                optionsBox.appendChild(b);
+            });
+        }
+
+        function showMemories(data) {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const display = document.getElementById('memory-display');
+            display.classList.remove('hidden');
+            const grid = document.getElementById('memory-grid');
+            grid.innerHTML = '';
+
+            data.memories.forEach(img => {
+                const mCard = document.createElement('div');
+                mCard.className = `memory-card animate__animated animate__zoomIn`;
+                // Placeholder images for demo - replace with your photo URLs
+                mCard.innerHTML = `<img src="https://via.placeholder.com/400x300?text=Our+Memory" alt="Memory"><p class="memory-msg">${data.msg}</p>`;
+                grid.appendChild(mCard);
+            });
+        }
+
+        function nextDay() {
+            currentDayIdx++;
+            if (currentDayIdx < weekData.length) {
+                loadQuiz();
+            } else {
+                nextSection(4);
+            }
+        }
+
+        window.onload = () => nextSection(1);
+    </script>
+</body>
+</html>
