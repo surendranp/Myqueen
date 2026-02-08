@@ -215,13 +215,17 @@
             width: 100%;
             height: 100vh;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             overflow-y: auto;
             overflow-x: hidden;
+        }
+
+        .opening-screen.active {
+            display: flex;
         }
 
         .opening-screen.hidden {
@@ -263,7 +267,6 @@
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
-
         }
 
         .opening-title {
@@ -300,25 +303,27 @@
             line-height: 1.6;
         }
 
-        .message-line:nth-child(1) { animation: lineAppear 0.8s ease-in-out 7s forwards; }
-        .message-line:nth-child(2) { animation: lineAppear 0.8s ease-in-out 7.6s forwards; }
-        .message-line:nth-child(3) { animation: lineAppear 0.8s ease-in-out 8.2s forwards; }
-        .message-line:nth-child(4) { animation: lineAppear 0.8s ease-in-out 8.8s forwards; }
-        .message-line:nth-child(5) { animation: lineAppear 0.8s ease-in-out 9.4s forwards; }
-        .message-line:nth-child(6) { animation: lineAppear 0.8s ease-in-out 10s forwards; }
-        .message-line:nth-child(7) { animation: lineAppear 0.8s ease-in-out 10.6s forwards; }
-        .message-line:nth-child(8) { animation: lineAppear 0.8s ease-in-out 11.2s forwards; }
-        .message-line:nth-child(9) { animation: lineAppear 0.8s ease-in-out 11.8s forwards; }
-        .message-line:nth-child(10) { animation: lineAppear 0.8s ease-in-out 12.4s forwards; }
-        .message-line:nth-child(11) { animation: lineAppear 0.8s ease-in-out 13s forwards; }
-        .message-line:nth-child(12) { animation: lineAppear 0.8s ease-in-out 13.6s forwards; }
-        .message-line:nth-child(13) { animation: lineAppear 0.8s ease-in-out 14.2s forwards; }
-        .message-line:nth-child(14) { animation: lineAppear 0.8s ease-in-out 14.8s forwards; }
-        .message-line:nth-child(15) { animation: lineAppear 0.8s ease-in-out 15.4s forwards; }
-        .message-line:nth-child(16) { animation: lineAppear 0.8s ease-in-out 16s forwards; }
-        .message-line:nth-child(17) { animation: lineAppear 0.8s ease-in-out 16.6s forwards; }
-        .message-line:nth-child(18) { animation: lineAppear 0.8s ease-in-out 17.2s forwards; }
-         .message-line:nth-child(19) { animation: lineAppear 0.8s ease-in-out 17.6s forwards; }
+        /* .message-line:first-child {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0 30px 0;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 
+                         2px 2px 6px rgba(0,0,0,0.4);
+            animation: glow 2s ease-in-out infinite;
+        } */
+
+        @keyframes glow {
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 
+                             2px 2px 6px rgba(0,0,0,0.4);
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(255, 215, 0, 1), 
+                             0 0 30px rgba(255, 215, 0, 0.6),
+                             2px 2px 6px rgba(0,0,0,0.4);
+            }
+        }
 
         @keyframes lineAppear {
             from { opacity: 0; transform: translateY(20px); }
@@ -337,7 +342,6 @@
             margin-top: 40px;
             margin-bottom: 60px;
             opacity: 0;
-            animation: btnAppear 1s ease-in-out 18s forwards;
             transition: all 0.3s ease;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
@@ -587,40 +591,16 @@
             display: block;
         }
 
-        .memory-img .placeholder-text {
+        .memory-img .image-label {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 10px;
+            color: white;
+            font-size: 0.9rem;
             text-align: center;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .memory-img.has-image .placeholder-text {
-            display: none;
-        }
-
-        .memory-img .upload-icon {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(255,255,255,0.9);
-            color: #f5576c;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            z-index: 2;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .memory-img:hover .upload-icon {
-            opacity: 1;
         }
 
         .memory-img:nth-child(1) { animation-delay: 0.2s; }
@@ -659,6 +639,7 @@
             border-radius: 20px;
             margin-top: 50px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
         }
 
         .final-message.active {
@@ -687,6 +668,98 @@
             font-size: 1.5rem;
             color: #333;
             line-height: 2;
+            margin-bottom: 40px;
+        }
+
+        .proposal-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            position: relative;
+            height: 80px;
+        }
+
+        .proposal-btn {
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+        }
+
+        .no-btn {
+            background: #ddd;
+            color: #666;
+            position: absolute;
+        }
+
+        .no-btn:hover {
+            background: #ccc;
+        }
+
+        /* Proposal Image Screen */
+        .proposal-screen {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .proposal-screen.active {
+            display: block;
+            animation: finalReveal 1s ease;
+        }
+
+        .proposal-screen h2 {
+            font-size: 3rem;
+            color: #f5576c;
+            margin-bottom: 30px;
+        }
+
+        .proposal-image {
+            max-width: 100%;
+            width: 600px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .goback-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .goback-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
         /* Floating Hearts */
@@ -701,6 +774,54 @@
         @keyframes floatHeart {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Sparkles Animation */
+        .sparkle {
+            position: absolute;
+            font-size: 20px;
+            pointer-events: none;
+            animation: sparkleFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                transform: translateY(0) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% { 
+                transform: translateY(-30px) scale(1) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        .sparkle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 150;
+        }
+
+        /* Glitter effect on modal */
+        .modal.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,192,203,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: glitterMove 3s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glitterMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
         }
 
         /* Image Upload Hidden Input */
@@ -718,37 +839,6 @@
             .message-line { font-size: 1.1rem; }
             .continue-btn { font-size: 1.1rem; padding: 15px 35px; }
         }
-
-        .hidden {
-    display: none !important;
-}
-
-.opening-screen {
-    display: flex;
-    opacity: 1;
-    pointer-events: auto;
-}
-/* Emoji Rain Styling */
-.emoji-rain {
-    position: fixed;
-    top: -50px;
-    z-index: -1; /* Keeps them behind your login and content */
-    user-select: none;
-    pointer-events: none; /* Makes them "unclickable" so they don't block buttons */
-    animation: fall linear forwards;
-}
-
-@keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(360deg);
-    }
-}
-
-/* Ensure your screens have a slightly transparent background if you want to see rain behind them */
-.login-screen, .opening-screen, .container {
-    position: relative;
-    z-index: 1;
-}
     </style>
 </head>
 <body>
@@ -767,48 +857,26 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" placeholder="Enter password" required>
                 </div>
-                <button type="submit" class="login-btn">Start to ❤️</button>
+                <button type="submit" class="login-btn">Enter Our Story ❤️</button>
                 <p class="error-message" id="errorMessage">Invalid credentials. Please try again!</p>
-                <span style="font-size: 0.8rem; color: #999; margin-top: 10px;">Hint: User name is "mylove" ... 😉  <br>Find the password to unlock the magic... 💖<br> if you can't find the password make a call to me ....</span>
-
-                
-              
+                <span>Hint: USername is how to i call you"**en"<span>Password is how to u call me "***a" each text starts with caps</span></span>
             </form>
         </div>
     </div>
 
     <!-- Opening Animation -->
-    <div class="opening-screen hidden" id="openingScreen">
-        <div class="romantic-words word-1">Forever & Always...</div>
-        <div class="romantic-words word-2">You Complete Me...</div>
-        <div class="romantic-words word-3">My Heart Beats For You...</div>
-        <div class="romantic-words word-4">Every Moment With You...</div>
-        <div class="romantic-words word-5">Sorry for the Delay...</div>
+    <div class="opening-screen" id="openingScreen">
+        <div class="romantic-words word-1" id="word1">Forever & Always...</div>
+        <div class="romantic-words word-2" id="word2">You Complete Me...</div>
+        <div class="romantic-words word-3" id="word3">My Heart Beats For You...</div>
+        <div class="romantic-words word-4" id="word4">Every Moment With You...</div>
+        <div class="romantic-words word-5" id="word5">Is A Beautiful Memory...</div>
         
         <div class="opening-content">
-            <!-- <div class="opening-title">Our Love Story ❤️</div> -->
-             <div class="opening-title">Hey Queen of My Heart ❤️</div>
+            <div class="opening-title">Our Love Story ❤️</div>
             
             <div class="love-message">
-                <div class="message-line">I may not know the perfect way to propose,</div>
-                <div class="message-line">but I know what my heart wants.</div>
-                <div class="message-line">So I'll just come straight to the point.</div>
-                <div class="message-line">I can't imagine my life without your smile.</div>
-                <div class="message-line">I can't live without the sound of your laughter.</div>
-                <div class="message-line">I can't live without your voice — the way it comforts me.</div>
-                <div class="message-line">I can't live without your scent, the way it feels like home.</div>
-                <div class="message-line">I can't live without your presence, because that's where my peace is.</div>
-                <div class="message-line">You are my girl.</div>
-                <div class="message-line">You are my best friend.</div>
-                <div class="message-line">You are my lady.</div>
-                <div class="message-line">You care for me like a mother.</div>
-                <div class="message-line">You are my love. You're my strength.</div>
-                <div class="message-line">My comfort in my eyes.</div>
-                <div class="message-line">And to me… you are my queen.</div>
-                <div class="message-line">You will always be my queen.</div>
-                <div class="message-line">You're the only Queen of my heart.</div>
-                <div class="message-line">You're my Every thing.........</div>
-                
+                <!-- Message lines will be dynamically inserted here -->
                 <button class="continue-btn" onclick="startJourney()">Continue Our Journey 💕</button>
             </div>
         </div>
@@ -818,10 +886,7 @@
     <div class="container" id="mainContainer">
         <div class="header">
             <h1>💕 Valentine's Week Journey 💕</h1>
-            <p>8 Days of Love, Leading to Forever...</p>|
-            <p>Please forgive me for the delay in creating this special journey for you...</p>
-
-
+            <p>8 Days of Love, Leading to Forever...</p>
         </div>
 
         <div class="quiz-grid" id="quizGrid">
@@ -829,11 +894,23 @@
         </div>
 
         <div class="final-message" id="finalMessage">
-            <h2>You're my everything... ❤️</h2>
-            <p>Through every rose, every chocolate, every promise...<br>
+            <h2 id="finalTitle">You're my everything... ❤️</h2>
+            <p id="finalText">Through every rose, every chocolate, every promise...<br>
             Through every hug, every kiss, every moment...<br>
             My love for you has only grown stronger.<br><br>
-            <strong>Will you marry me? 💍</strong></p>
+            <strong>Will you marry me (Enoda saynthu kastapada Ready ah ?)? 💍</strong></p>
+            <div class="proposal-buttons">
+                <button class="proposal-btn yes-btn" onclick="handleYes()">Yes! 💕</button>
+                <button class="proposal-btn no-btn" id="noBtn" onmouseover="escapeButton(event)">No</button>
+            </div>
+        </div>
+
+        <div class="proposal-screen" id="proposalScreen">
+            <h2>Namalowda inthe a nama sweet ah start panalam 💍❤️</h2>
+            <p style="font-size: 1.3rem; color: #ffffff; margin-bottom: 20px;">Forever starts now, my queen! 👑</p>
+            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=800" alt="Proposal" class="proposal-image" id="proposalImage">
+            <br>
+            <button class="goback-btn" onclick="goBackToCards()">View Our Journey Again 💕</button>
         </div>
     </div>
 
@@ -849,9 +926,6 @@
         </div>
     </div>
 
-    <!-- Hidden file inputs for image uploads -->
-    <input type="file" id="imageUpload" class="image-upload" accept="image/*" multiple>
-
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
@@ -862,54 +936,443 @@
         </div>
     </div>
 
+    <!-- Sparkle Container -->
+    <div class="sparkle-container" id="sparkleContainer"></div>
+
     <script>
-        // Login credentials
+        // Login credentials 
         const CREDENTIALS = {
-            username: "mylove",  // Change this to your desired username
-            password: "forever"   // Change this to your desired password
+            username: "Bava",  
+            password: "Queen" 
         };
 
-        // Handle login
-        // function handleLogin(event) {
-        //     event.preventDefault();
-        //     const username = document.getElementById('username').value;
-        //     const password = document.getElementById('password').value;
-        //     const errorMessage = document.getElementById('errorMessage');
+        // Valentine's Week Dates (2026)
+        const VALENTINE_WEEK = [
+            { 
+                date: '2026-02-07', 
+                name: 'Rose Day', 
+                emoji: '🌹', 
+                index: 0,
+                words: ['A Rose For You...', 'Blooming With Love...', 'Petals Of Romance...', 'Thorns We Overcame...', 'Garden Of Our Hearts...'],
+                background: 'linear-gradient(135deg, #ff6b9d 0%, #c44569 100%)',
+                finalMessage: 'Like the most beautiful rose in the garden, you stand out in my life. Every thorn we faced together made our love stronger. Will you be my rose forever?'
+            },
+            { 
+                date: '2026-02-08', 
+                name: 'Propose Day', 
+                emoji: '💍', 
+                index: 1,
+                words: ['Forever & Always...', 'You Complete Me...', 'My Heart Beats For You...', 'Every Moment With You...', 'Is A Beautiful Memory...'],
+                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                finalMessage: 'Through every rose, every chocolate, every promise...<br>Through every hug, every kiss, every moment...<br>My love for you has only grown stronger.'
+            },
+            { 
+                date: '2026-02-09', 
+                name: 'Chocolate Day', 
+                emoji: '🍫', 
+                index: 2,
+                words: ['Sweet Like Chocolate...', 'Melting Hearts Together...', 'Rich And Delicious...', 'Savor Every Moment...', 'Forever Sweet...'],
+                background: 'linear-gradient(135deg, #8d5524 0%, #c68642 100%)',
+                finalMessage: 'Our love is sweeter than the finest chocolate, richer than any truffle. You add sweetness to every moment of my life. Will you be my sweetness forever?'
+            },
+            { 
+                date: '2026-02-10', 
+                name: 'Teddy Day', 
+                emoji: '🧸', 
+                index: 3,
+                words: ['Warm Cuddles...', 'Comfort In Your Arms...', 'Safe And Loved...', 'My Soft Place...', 'Forever Hugging...'],
+                background: 'linear-gradient(135deg, #d4a574 0%, #8b6f47 100%)',
+                finalMessage: 'In your embrace, I found my home. You are my comfort, my safety, my peace. Will you be my cuddle buddy for life?'
+            },
+            { 
+                date: '2026-02-11', 
+                name: 'Promise Day', 
+                emoji: '🤞', 
+                index: 4,
+                words: ['I Promise Forever...', 'Always Choose Us...', 'Through Every Storm...', 'Growing Together...', 'Eternal Vows...'],
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                finalMessage: 'I promise to choose you every day, to stand by you through every challenge, to love you endlessly. Will you accept my promises forever?'
+            },
+            { 
+                date: '2026-02-12', 
+                name: 'Hug Day', 
+                emoji: '🤗', 
+                index: 5,
+                words: ['Home In Your Arms...', 'Wrapped In Love...', 'Healing Embrace...', 'Heart To Heart...', 'Never Letting Go...'],
+                background: 'linear-gradient(135deg, #f5576c 0%, #f093fb 100%)',
+                finalMessage: 'Your hugs heal my soul, your embrace is my home. In your arms, I found where I belong. Will you hold me forever?'
+            },
+            { 
+                date: '2026-02-13', 
+                name: 'Kiss Day', 
+                emoji: '💋', 
+                index: 6,
+                words: ['Sealed With A Kiss...', 'Passion Ignited...', 'Lips Speak Love...', 'Electric Connection...', 'Forever Yours...'],
+                background: 'linear-gradient(135deg, #ff0844 0%, #ffb199 100%)',
+                finalMessage: 'Every kiss tells our story of passion and promise. Your lips speak to my soul in ways words never could. Will you kiss me for eternity?'
+            },
+            { 
+                date: '2026-02-14', 
+                name: "Valentine's Day", 
+                emoji: '❤️', 
+                index: 7,
+                words: ['You Are My Everything...', 'Forever My Valentine...', 'Love Beyond Words...', 'Two Hearts One Soul...', 'Eternal Romance...'],
+                background: 'linear-gradient(135deg, #ee0979 0%, #ff6a00 100%)',
+                finalMessage: 'This journey through Valentine\'s week has celebrated us. Today, I offer you my forever. You are my everything—my love, my life, my reason to smile.'
+            }
+        ];
+
+        // Opening screen messages for each day
+        const OPENING_MESSAGES = {
+            0: { // Rose Day
+                title: "Rose Day 🌹",
+                lines: [
+                    "MY Queen 👑",
+                    "",
+                    "Like a rose blooming in the garden of my heart,",
+                    "you bring beauty to every moment of my life.",
+                    "Today, I celebrate the grace and elegance you embody.",
+                    "Every petal whispers your name,",
+                    "every thorn reminds me of the challenges we've overcome together.",
+                    "You are the most precious rose in my life's garden.",
+                    "With every breath, I choose you.",
+                    "Happy Rose Day, my love! 🌹"
+                ]
+            },
+            1: { // Propose Day
+                title: "Propose Day 💍",
+                lines: [
+                    "MY Queen 👑",
+                    "",
+                    "I may not know the perfect way to propose,",
+                    "but I know what my heart wants.",
+                    "So I'll just come straight to the point.",
+                    "I can't imagine my life without your smile.",
+                    "I can't live without the sound of your laughter.",
+                    "I can't live without your voice — the way it comforts me.",
+                    "I can't live without your scent, the way it feels like home.",
+                    "I can't live without your presence, because that's where my peace is.",
+                    "You are my girl. You are my best friend.",
+                    "You are my lady. You care for me like a mother.",
+                    "You are my love. You're my strength.",
+                    "My comfort in my eyes.",
+                    "And to me… you are my queen.",
+                    "You will always be my queen.",
+                    "You're the only Queen of my heart. 💍"
+                ]
+            },
+            2: { // Chocolate Day
+                title: "Chocolate Day 🍫",
+                lines: [
+                    "MY Queen 👑",
+                    "",
+                    "Life with you is sweeter than the finest chocolate,",
+                    "richer than the most decadent truffle.",
+                    "Every moment we share melts my heart,",
+                    "just like chocolate on the tongue.",
+                    "You add sweetness to my bitter days,",
+                    "and make the sweet ones even more delicious.",
+                    "You're my favorite indulgence,",
+                    "my sweetest addiction.",
+                    "Happy Chocolate Day, my sweet love! 🍫"
+                ]
+            },
+            // 3: { // Teddy Day
+            //     title: "Teddy Day 🧸",
+            //     lines: [
+            //         "MY Queen 👑",
+            //         "",
+            //         "Just like a teddy bear brings comfort to a child,",
+            //         "you bring peace to my soul.",
+            //         "In your arms, I find my safest place,",
+            //         "my warmest embrace.",
+            //         "You're the cuddle I crave after a long day,",
+            //         "the softness I seek in a harsh world.",
+            //         "With you, I can be completely myself,",
+            //         "vulnerable yet protected.",
+            //         "Happy Teddy Day, my comfort! 🧸"
+            //     ]
+            // },
+            // 4: { // Promise Day
+            //     title: "Promise Day 🤞",
+            //     lines: [
+            //         "MY Queen 👑",
+            //         "",
+            //         "Today, I make promises that my heart has already kept.",
+            //         "I promise to choose you, every single day.",
+            //         "I promise to stand by you through storms and sunshine.",
+            //         "I promise to be your strength when you feel weak,",
+            //         "and to celebrate your victories as my own.",
+            //         "I promise to love you not just when it's easy,",
+            //         "but especially when it's hard.",
+            //         "These aren't just words, they're vows from my soul.",
+            //         "Happy Promise Day, my forever! 🤞"
+            //     ]
+            // },
+            // 5: { // Hug Day
+            //     title: "Hug Day 🤗",
+            //     lines: [
+            //         "MY Queen 👑",
+            //         "",
+            //         "In your embrace, I've found my home.",
+            //         "Not a place made of walls and doors,",
+            //         "but a feeling of absolute belonging.",
+            //         "Your hugs heal wounds that words cannot reach,",
+            //         "they speak a language deeper than speech.",
+            //         "Every time you hold me,",
+            //         "the world outside fades away.",
+            //         "In your arms, everything makes sense.",
+            //         "Happy Hug Day, my home! 🤗"
+            //     ]
+            // },
+            // 6: { // Kiss Day
+            //     title: "Kiss Day 💋",
+            //     lines: [
+            //         "MY Queen 👑",
+            //         "",
+            //         "Every kiss we share tells a story,",
+            //         "of passion, of promise, of forever.",
+            //         "Your lips speak to my soul in ways words never could.",
+            //         "Each kiss is a reminder that you're mine,",
+            //         "and I am yours, completely.",
+            //         "They seal our love with every touch,",
+            //         "igniting a fire that will never burn out.",
+            //         "In your kiss, I find infinity.",
+            //         "Happy Kiss Day, my passion! 💋"
+            //     ]
+            // },
+            // 7: { // Valentine's Day
+            //     title: "Valentine's Day ❤️",
+            //     lines: [
+            //         "MY Queen 👑",
+            //         "",
+            //         "This journey through Valentine's week,",
+            //         "has been a celebration of us.",
+            //         "From roses to promises, from hugs to kisses,",
+            //         "every day has brought us closer.",
+            //         "Today, on Valentine's Day,",
+            //         "I want to give you my forever.",
+            //         "You are my everything—",
+            //         "my love, my life, my reason to smile.",
+            //         "Happy Valentine's Day, my eternal love! ❤️"
+            //     ]
+            // }
+        };
+
+        // Get current Valentine's day info
+        function getCurrentValentineDay() {
+            const today = new Date().toISOString().split('T')[0];
+            const currentDay = VALENTINE_WEEK.find(day => day.date === today);
             
-        //     if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
-        //         document.getElementById('loginScreen').classList.add('hidden');
-        //         errorMessage.classList.remove('show');
-        //     } else {
-        //         errorMessage.classList.add('show');
-        //     }
-        // }
+            if (currentDay) {
+                return currentDay;
+            }
+            
+            // If not in Valentine's week, return the first day for testing
+            // Remove this in production or set to null
+            return VALENTINE_WEEK[1]; // Default to Propose Day for testing
+        }
+
+        // Mark previous days as completed
+        function markPreviousDaysCompleted() {
+            const today = new Date().toISOString().split('T')[0];
+            const currentDayIndex = VALENTINE_WEEK.findIndex(day => day.date === today);
+            
+            if (currentDayIndex > 0) {
+                // Mark all previous days as completed
+                for (let i = 0; i < currentDayIndex; i++) {
+                    const card = document.querySelectorAll('.quiz-card')[i];
+                    if (card && !card.classList.contains('completed')) {
+                        card.classList.add('completed');
+                        card.querySelector('.status').textContent = 'Completed ✓';
+                        completedQuizzes++;
+                    }
+                }
+            }
+        }
+
+        // Update opening screen content based on current day
+        function updateOpeningScreenContent() {
+            const currentDay = getCurrentValentineDay();
+            if (!currentDay) return;
+            
+            const messages = OPENING_MESSAGES[currentDay.index];
+            const titleElement = document.querySelector('.opening-title');
+            const messageContainer = document.querySelector('.love-message');
+            
+            // Update background
+            document.getElementById('openingScreen').style.background = currentDay.background;
+            
+            // Update romantic words
+            currentDay.words.forEach((word, index) => {
+                const wordElement = document.getElementById(`word${index + 1}`);
+                if (wordElement) {
+                    wordElement.textContent = word;
+                }
+            });
+            
+            // Update title
+            titleElement.textContent = messages.title;
+            
+            // Clear existing content
+            messageContainer.innerHTML = '';
+            
+            // Add new message lines
+            messages.lines.forEach((line, index) => {
+                const lineElement = document.createElement('div');
+                lineElement.className = 'message-line';
+                lineElement.textContent = line;
+                lineElement.style.animation = `lineAppear 0.8s ease-in-out ${7 + (index * 0.6)}s forwards`;
+                messageContainer.appendChild(lineElement);
+            });
+            
+            // Add continue button
+            const continueBtn = document.createElement('button');
+            continueBtn.className = 'continue-btn';
+            continueBtn.textContent = 'Continue Our Journey 💕';
+            continueBtn.onclick = startJourney;
+            
+            const totalDelay = 7 + (messages.lines.length * 0.6) + 0.8;
+            continueBtn.style.animation = `btnAppear 1s ease-in-out ${totalDelay}s forwards`;
+            
+            messageContainer.appendChild(continueBtn);
+        }
+
+        // Update final message based on current day
+        function updateFinalMessage() {
+            const currentDay = getCurrentValentineDay();
+            if (!currentDay) return;
+            
+            document.getElementById('finalTitle').textContent = "You're my everything... ❤️";
+            document.getElementById('finalText').innerHTML = currentDay.finalMessage + '<br><br><strong>Will you marry me? 💍</strong>';
+        }
+
+        // Handle Yes button
+        function handleYes() {
+            document.getElementById('finalMessage').classList.remove('active');
+            document.getElementById('proposalScreen').classList.add('active');
+            createFloatingHearts();
+        }
+
+        // Escape No button from cursor
+        function escapeButton(event) {
+            const button = event.target;
+            const container = button.parentElement;
+            
+            const maxX = container.offsetWidth - button.offsetWidth;
+            const maxY = container.offsetHeight - button.offsetHeight;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            button.style.left = randomX + 'px';
+            button.style.top = randomY + 'px';
+        }
+
+        // Go back to cards
+        function goBackToCards() {
+            document.getElementById('proposalScreen').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Predefined memory images (placeholder images - replace with actual image URLs)
+        const MEMORY_IMAGES = {
+            // Rose Day
+            '0-0': ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400', 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400', 'https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400'],
+            '0-1': ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400', 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400', 'https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400'],
+            '0-2': ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400', 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400', 'https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400'],
+            
+            // Propose Day
+            '1-0': ['https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400', 'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400', 'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400', 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=400'],
+            '1-1': ['https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400', 'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400', 'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400', 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=400'],
+            '1-2': ['https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400', 'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400', 'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400', 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=400'],
+            
+            // Chocolate Day
+            '2-0': ['https://images.unsplash.com/photo-1511381939415-e44015466834?w=400', 'https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400', 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=400', 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400'],
+            '2-1': ['https://images.unsplash.com/photo-1511381939415-e44015466834?w=400', 'https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400', 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=400', 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400'],
+            '2-2': ['https://images.unsplash.com/photo-1511381939415-e44015466834?w=400', 'https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400', 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=400', 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400'],
+            
+            // Teddy Day
+            '3-0': ['https://images.unsplash.com/photo-1527335480088-278dbeec0ad5?w=400', 'https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400', 'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=400', 'https://images.unsplash.com/photo-1551501401-4a07b1f3cd6e?w=400'],
+            '3-1': ['https://images.unsplash.com/photo-1527335480088-278dbeec0ad5?w=400', 'https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400', 'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=400', 'https://images.unsplash.com/photo-1551501401-4a07b1f3cd6e?w=400'],
+            '3-2': ['https://images.unsplash.com/photo-1527335480088-278dbeec0ad5?w=400', 'https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400', 'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=400', 'https://images.unsplash.com/photo-1551501401-4a07b1f3cd6e?w=400'],
+            
+            // Promise Day
+            '4-0': ['https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400', 'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400'],
+            '4-1': ['https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400', 'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400'],
+            '4-2': ['https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400', 'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400'],
+            
+            // Hug Day
+            '5-0': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400'],
+            '5-1': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400'],
+            '5-2': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400'],
+            
+            // Kiss Day
+            '6-0': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400'],
+            '6-1': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400'],
+            '6-2': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400'],
+            
+            // Valentine's Day
+            '7-0': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400'],
+            '7-1': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400'],
+            '7-2': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400']
+        };
+
+        // Create sparkles animation (now hearts)
+        function createSparkles() {
+            const container = document.getElementById('sparkleContainer');
+            container.innerHTML = ''; // Clear existing sparkles
+            
+            const heartEmojis = ['❤️', '💕', '💗', '💖', '💝', '💓', '💞'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.animationDelay = Math.random() * 2 + 's';
+                    sparkle.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                    container.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        // Remove sparkles
+        function removeSparkles() {
+            const container = document.getElementById('sparkleContainer');
+            container.innerHTML = '';
+        }
+
+        // Handle login
         function handleLogin(event) {
-    event.preventDefault();
-
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const errorMessage = document.getElementById('errorMessage');
-
-    if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
-        // Hide login
-        document.getElementById('loginScreen').classList.add('hidden');
-        errorMessage.classList.remove('show');
-
-        // 🔥 Trigger opening screen
-        const openingScreen = document.getElementById('openingScreen');
-        openingScreen.classList.remove('hidden');
-
-        // ⏱️ After animation, auto move (optional)
-        // setTimeout(() => {
-        //     openingScreen.classList.add('hidden');
-        //     document.getElementById('mainContainer').classList.add('active');
-        // }, 19000); // cinematic duration
-
-    } else {
-        errorMessage.classList.add('show');
-    }
-}
-
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
+                // Hide login screen
+                document.getElementById('loginScreen').classList.add('hidden');
+                errorMessage.classList.remove('show');
+                
+                // Update opening screen content for current day
+                updateOpeningScreenContent();
+                
+                // Show opening animation
+                document.getElementById('openingScreen').classList.add('active');
+                
+                // Mark previous days as completed
+                setTimeout(() => {
+                    markPreviousDaysCompleted();
+                }, 100);
+            } else {
+                errorMessage.classList.add('show');
+            }
+        }
 
         // Lightbox variables
         let currentLightboxImages = [];
@@ -1001,151 +1464,148 @@
                     }
                 ]
             },
-            // {
-            //     day: "Feb 9 - Chocolate Day",
-            //     emoji: "🍫",
-            //     date: "February 9, 2026",
-            //     question: "How sweet is our love?",
-            //     answers: [
-            //         {
-            //             text: "Sweeter than the finest chocolate",
-            //             message: "Our love is rich, indulgent, and absolutely irresistible. Like the smoothest chocolate melting on your tongue, our moments together are pure bliss. You're my sweetest addiction, my favorite indulgence, my delicious forever.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "A perfect blend of sweet moments",
-            //             message: "Every day with you is like discovering a new flavor - sometimes dark and intense, sometimes milk and comforting, always perfectly sweet. Our love is a carefully crafted blend of laughter, romance, and beautiful surprises.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "Sweet enough to last a lifetime",
-            //             message: "This sweetness will never fade or expire. While chocolates melt away, our love only grows richer with time. You're the sweetness I'll savor every morning and every night for the rest of my days.",
-            //             images: 4
-            //         }
-            //     ]
-            // },
-            // {
-            //     day: "Feb 10 - Teddy Day",
-            //     emoji: "🧸",
-            //     date: "February 10, 2026",
-            //     question: "What comfort do I bring to your life?",
-            //     answers: [
-            //         {
-            //             text: "A safe place to be myself",
-            //             message: "In your embrace, I find the comfort of being completely, authentically me. Like a cherished teddy bear from childhood, you're my source of security in this chaotic world. With you, I can let my guard down and just... be.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "Warmth in difficult times",
-            //             message: "When storms rage around us, you're my shelter. Your presence wraps around me like the softest blanket, warming my soul even on the coldest days. You turn my tears into smiles and my fears into courage.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "A constant source of joy",
-            //             message: "You're the cuddle I crave after a long day, the smile that greets me each morning. Like holding a beloved teddy bear, being with you brings instant comfort and happiness. You're my joy, my peace, my everything.",
-            //             images: 4
-            //         }
-            //     ]
-            // },
-            // {
-            //     day: "Feb 11 - Promise Day",
-            //     emoji: "🤞",
-            //     date: "February 11, 2026",
-            //     question: "What promise means the most to you?",
-            //     answers: [
-            //         {
-            //             text: "To always choose us",
-            //             message: "I promise that through every challenge, every disagreement, every tough decision, I will always choose us. Our love is worth fighting for, worth working on, worth choosing every single day. This is my sacred vow.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "To grow together",
-            //             message: "I promise we'll never stop growing - as individuals, as partners, as soulmates. We'll encourage each other's dreams, celebrate each other's victories, and lift each other up through every setback. Together, we'll become our best selves.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "To love you endlessly",
-            //             message: "I promise to love you in the big moments and the small ones. When you're at your best and when you're struggling. Through laughter and tears, through youth and old age. My love for you knows no bounds and no end.",
-            //             images: 4
-            //         }
-            //     ]
-            // },
-            // {
-            //     day: "Feb 12 - Hug Day",
-            //     emoji: "🤗",
-            //     date: "February 12, 2026",
-            //     question: "What does my embrace mean to you?",
-            //     answers: [
-            //         {
-            //             text: "Home in your arms",
-            //             message: "Your hugs are where I belong. In your embrace, I've found my home - not a place, but a feeling. A feeling of absolute safety, unwavering love, and perfect peace. Your arms are my favorite place in the entire world.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "Healing and comfort",
-            //             message: "Your hugs have healing power. They mend my broken days, soothe my anxious mind, and remind me that everything will be okay. In your arms, every burden feels lighter, every problem seems solvable.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "Pure connection",
-            //             message: "When you hold me, words become unnecessary. Heart to heart, soul to soul - our embrace speaks a language deeper than words. In those moments, I feel completely connected to you, completely understood, completely loved.",
-            //             images: 4
-            //         }
-            //     ]
-            // },
-            // {
-            //     day: "Feb 13 - Kiss Day",
-            //     emoji: "💋",
-            //     date: "February 13, 2026",
-            //     question: "What do my kisses tell you?",
-            //     answers: [
-            //         {
-            //             text: "How deeply I'm cherished",
-            //             message: "Every kiss is a love letter written on my lips. They tell me I'm treasured, adored, and precious beyond measure. Your kisses make me feel like the most important person in your universe, because that's exactly what I am.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "The passion we share",
-            //             message: "Our kisses ignite a spark that never dims. They're filled with desire, romance, and an electric connection that makes my heart race. Each kiss reminds me that our passion burns eternal and bright.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "Forever isn't long enough",
-            //             message: "Every kiss whispers that one lifetime isn't enough to love you. They promise infinite tomorrows, endless adventures, and a love that transcends time itself. Your kisses seal our eternal bond.",
-            //             images: 4
-            //         }
-            //     ]
-            // },
-            // {
-            //     day: "Feb 14 - Valentine's Day",
-            //     emoji: "❤️",
-            //     date: "February 14, 2026",
-            //     question: "What is your final answer to my heart?",
-            //     answers: [
-            //         {
-            //             text: "Yes, forever and always",
-            //             message: "My heart chooses you today, tomorrow, and for all our tomorrows. Through every season of life, every joy and challenge, every sunrise and sunset - my answer is yes. Yes to your love, yes to our future, yes to forever.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "You're my everything",
-            //             message: "You're not just my love - you're my best friend, my partner in crime, my comfort, my adventure, my peace, my excitement, my home. You're the missing piece I didn't know I needed, now found forever.",
-            //             images: 4
-            //         },
-            //         {
-            //             text: "Let's write our forever",
-            //             message: "Our story is just beginning. Each page will be filled with laughter, love, and beautiful memories. Hand in hand, heart to heart, let's write the greatest love story ever told - ours.",
-            //             images: 4
-            //         }
-            //     ]
-            // }
+            {
+                day: "Feb 9 - Chocolate Day",
+                emoji: "🍫",
+                date: "February 9, 2026",
+                question: "How sweet is our love?",
+                answers: [
+                    {
+                        text: "Sweeter than the finest chocolate",
+                        message: "Our love is rich, indulgent, and absolutely irresistible. Like the smoothest chocolate melting on your tongue, our moments together are pure bliss. You're my sweetest addiction, my favorite indulgence, my delicious forever.",
+                        images: 4
+                    },
+                    {
+                        text: "A perfect blend of sweet moments",
+                        message: "Every day with you is like discovering a new flavor - sometimes dark and intense, sometimes milk and comforting, always perfectly sweet. Our love is a carefully crafted blend of laughter, romance, and beautiful surprises.",
+                        images: 4
+                    },
+                    {
+                        text: "Sweet enough to last a lifetime",
+                        message: "This sweetness will never fade or expire. While chocolates melt away, our love only grows richer with time. You're the sweetness I'll savor every morning and every night for the rest of my days.",
+                        images: 4
+                    }
+                ]
+            },
+            {
+                day: "Feb 10 - Teddy Day",
+                emoji: "🧸",
+                date: "February 10, 2026",
+                question: "What comfort do I bring to your life?",
+                answers: [
+                    {
+                        text: "A safe place to be myself",
+                        message: "In your embrace, I find the comfort of being completely, authentically me. Like a cherished teddy bear from childhood, you're my source of security in this chaotic world. With you, I can let my guard down and just... be.",
+                        images: 4
+                    },
+                    {
+                        text: "Warmth in difficult times",
+                        message: "When storms rage around us, you're my shelter. Your presence wraps around me like the softest blanket, warming my soul even on the coldest days. You turn my tears into smiles and my fears into courage.",
+                        images: 4
+                    },
+                    {
+                        text: "A constant source of joy",
+                        message: "You're the cuddle I crave after a long day, the smile that greets me each morning. Like holding a beloved teddy bear, being with you brings instant comfort and happiness. You're my joy, my peace, my everything.",
+                        images: 4
+                    }
+                ]
+            },
+            {
+                day: "Feb 11 - Promise Day",
+                emoji: "🤞",
+                date: "February 11, 2026",
+                question: "What promise means the most to you?",
+                answers: [
+                    {
+                        text: "To always choose us",
+                        message: "I promise that through every challenge, every disagreement, every tough decision, I will always choose us. Our love is worth fighting for, worth working on, worth choosing every single day. This is my sacred vow.",
+                        images: 4
+                    },
+                    {
+                        text: "To grow together",
+                        message: "I promise we'll never stop growing - as individuals, as partners, as soulmates. We'll encourage each other's dreams, celebrate each other's victories, and lift each other up through every setback. Together, we'll become our best selves.",
+                        images: 4
+                    },
+                    {
+                        text: "To love you endlessly",
+                        message: "I promise to love you in the big moments and the small ones. When you're at your best and when you're struggling. Through laughter and tears, through youth and old age. My love for you knows no bounds and no end.",
+                        images: 4
+                    }
+                ]
+            },
+            {
+                day: "Feb 12 - Hug Day",
+                emoji: "🤗",
+                date: "February 12, 2026",
+                question: "What does my embrace mean to you?",
+                answers: [
+                    {
+                        text: "Home in your arms",
+                        message: "Your hugs are where I belong. In your embrace, I've found my home - not a place, but a feeling. A feeling of absolute safety, unwavering love, and perfect peace. Your arms are my favorite place in the entire world.",
+                        images: 4
+                    },
+                    {
+                        text: "Healing and comfort",
+                        message: "Your hugs have healing power. They mend my broken days, soothe my anxious mind, and remind me that everything will be okay. In your arms, every burden feels lighter, every problem seems solvable.",
+                        images: 4
+                    },
+                    {
+                        text: "Pure connection",
+                        message: "When you hold me, words become unnecessary. Heart to heart, soul to soul - our embrace speaks a language deeper than words. In those moments, I feel completely connected to you, completely understood, completely loved.",
+                        images: 4
+                    }
+                ]
+            },
+            {
+                day: "Feb 13 - Kiss Day",
+                emoji: "💋",
+                date: "February 13, 2026",
+                question: "What do my kisses tell you?",
+                answers: [
+                    {
+                        text: "How deeply I'm cherished",
+                        message: "Every kiss is a love letter written on my lips. They tell me I'm treasured, adored, and precious beyond measure. Your kisses make me feel like the most important person in your universe, because that's exactly what I am.",
+                        images: 4
+                    },
+                    {
+                        text: "The passion we share",
+                        message: "Our kisses ignite a spark that never dims. They're filled with desire, romance, and an electric connection that makes my heart race. Each kiss reminds me that our passion burns eternal and bright.",
+                        images: 4
+                    },
+                    {
+                        text: "Forever isn't long enough",
+                        message: "Every kiss whispers that one lifetime isn't enough to love you. They promise infinite tomorrows, endless adventures, and a love that transcends time itself. Your kisses seal our eternal bond.",
+                        images: 4
+                    }
+                ]
+            },
+            {
+                day: "Feb 14 - Valentine's Day",
+                emoji: "❤️",
+                date: "February 14, 2026",
+                question: "What is your final answer to my heart?",
+                answers: [
+                    {
+                        text: "Yes, forever and always",
+                        message: "My heart chooses you today, tomorrow, and for all our tomorrows. Through every season of life, every joy and challenge, every sunrise and sunset - my answer is yes. Yes to your love, yes to our future, yes to forever.",
+                        images: 4
+                    },
+                    {
+                        text: "You're my everything",
+                        message: "You're not just my love - you're my best friend, my partner in crime, my comfort, my adventure, my peace, my excitement, my home. You're the missing piece I didn't know I needed, now found forever.",
+                        images: 4
+                    },
+                    {
+                        text: "Let's write our forever",
+                        message: "Our story is just beginning. Each page will be filled with laughter, love, and beautiful memories. Hand in hand, heart to heart, let's write the greatest love story ever told - ours.",
+                        images: 4
+                    }
+                ]
+            }
         ];
 
         let completedQuizzes = 0;
         const totalQuizzes = quizData.length;
-        let uploadedImages = {};
-        let currentQuizIndex = -1;
-        let currentAnswerIndex = -1;
 
         // Start journey function
         function startJourney() {
@@ -1172,7 +1632,6 @@
 
         // Open quiz modal
         function openQuiz(index) {
-            currentQuizIndex = index;
             const quiz = quizData[index];
             const modal = document.getElementById('modal');
             const quizContent = document.getElementById('quizContent');
@@ -1192,12 +1651,11 @@
             `;
             
             modal.classList.add('active');
+            createSparkles(); // Create sparkles when modal opens
         }
 
         // Show result
         function showResult(quizIndex, answerIndex) {
-            currentQuizIndex = quizIndex;
-            currentAnswerIndex = answerIndex;
             const quiz = quizData[quizIndex];
             const answer = quiz.answers[answerIndex];
             const quizContent = document.getElementById('quizContent');
@@ -1205,25 +1663,26 @@
             
             quizContent.style.display = 'none';
             
+            // Get predefined images for this answer
+            const imageKey = `${quizIndex}-${answerIndex}`;
+            const images = MEMORY_IMAGES[imageKey] || [];
+            
             let imagesHTML = '';
-            let allImages = [];
             
             for (let i = 0; i < answer.images; i++) {
-                const imageKey = `${quizIndex}-${answerIndex}-${i}`;
-                const imageSrc = uploadedImages[imageKey];
+                const imageSrc = images[i];
                 
                 if (imageSrc) {
-                    allImages.push(imageSrc);
                     imagesHTML += `
-                        <div class="memory-img has-image" onclick="handleImageClick(${quizIndex}, ${answerIndex}, ${i})">
+                        <div class="memory-img" onclick="viewImageInLightbox(${quizIndex}, ${answerIndex}, ${i})">
                             <img src="${imageSrc}" alt="Memory ${i + 1}">
-                            <div class="upload-icon">📷</div>
+                            <div class="image-label">Memory ${i + 1}</div>
                         </div>
                     `;
                 } else {
                     imagesHTML += `
-                        <div class="memory-img" onclick="uploadImage(${quizIndex}, ${answerIndex}, ${i})">
-                            <div class="placeholder-text">Click to add<br>Memory ${i + 1}<br>💕</div>
+                        <div class="memory-img">
+                            <div>💕 Memory ${i + 1} 💕</div>
                         </div>
                     `;
                 }
@@ -1237,61 +1696,18 @@
             `;
             
             resultScreen.classList.add('active');
+            createSparkles(); // Refresh sparkles for result screen
         }
 
-        // Handle image click - view in lightbox or upload
-        function handleImageClick(quizIndex, answerIndex, imageIndex) {
-            const imageKey = `${quizIndex}-${answerIndex}-${imageIndex}`;
-            const imageSrc = uploadedImages[imageKey];
+        // View image in lightbox
+        function viewImageInLightbox(quizIndex, answerIndex, imageIndex) {
+            const imageKey = `${quizIndex}-${answerIndex}`;
+            const images = MEMORY_IMAGES[imageKey] || [];
             
-            if (imageSrc) {
-                // Get all images for this answer
-                const answer = quizData[quizIndex].answers[answerIndex];
-                let allImages = [];
-                let currentIndex = 0;
-                
-                for (let i = 0; i < answer.images; i++) {
-                    const key = `${quizIndex}-${answerIndex}-${i}`;
-                    if (uploadedImages[key]) {
-                        if (i === imageIndex) {
-                            currentIndex = allImages.length;
-                        }
-                        allImages.push(uploadedImages[key]);
-                    }
-                }
-                
-                openLightbox(imageSrc, allImages, currentIndex);
-            } else {
-                uploadImage(quizIndex, answerIndex, imageIndex);
+            if (images[imageIndex]) {
+                openLightbox(images[imageIndex], images, imageIndex);
             }
         }
-
-        // Upload image
-        function uploadImage(quizIndex, answerIndex, imageIndex) {
-            currentQuizIndex = quizIndex;
-            currentAnswerIndex = answerIndex;
-            const input = document.getElementById('imageUpload');
-            input.setAttribute('data-image-index', imageIndex);
-            input.click();
-        }
-
-        // Handle image upload
-        document.getElementById('imageUpload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const imageIndex = parseInt(e.target.getAttribute('data-image-index'));
-                    const imageKey = `${currentQuizIndex}-${currentAnswerIndex}-${imageIndex}`;
-                    uploadedImages[imageKey] = event.target.result;
-                    
-                    // Refresh the result screen
-                    showResult(currentQuizIndex, currentAnswerIndex);
-                };
-                reader.readAsDataURL(file);
-            }
-            e.target.value = ''; // Reset input
-        });
 
         // Close modal
         function closeModal(quizIndex) {
@@ -1305,9 +1721,11 @@
             }
             
             modal.classList.remove('active');
+            removeSparkles(); // Remove sparkles when modal closes
             
             if (completedQuizzes === totalQuizzes) {
                 setTimeout(() => {
+                    updateFinalMessage();
                     document.getElementById('finalMessage').classList.add('active');
                     createFloatingHearts();
                 }, 500);
@@ -1333,42 +1751,6 @@
 
         // Initialize
         initQuizCards();
-    </script>
-    <script>
-     function initEmojiRain() {
-    const emojis = ['❤️', '💖', '🍫', '🌹', '✨', '🧸', '💍', '💋'];
-    
-    setInterval(() => {
-        const emoji = document.createElement('div');
-        emoji.className = 'emoji-rain';
-        
-        // Randomize Emoji
-        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        
-        // Randomize Position
-        emoji.style.left = Math.random() * 100 + 'vw';
-        
-        // Randomize Size
-        emoji.style.fontSize = Math.random() * 20 + 15 + 'px';
-        
-        // Randomize Speed (between 3 and 7 seconds)
-        const duration = Math.random() * 4 + 3;
-        emoji.style.animationDuration = duration + 's';
-        
-        // Randomize Opacity
-        emoji.style.opacity = Math.random() * 0.5 + 0.5;
-
-        document.body.appendChild(emoji);
-
-        // Remove emoji after it falls to prevent memory lag
-        setTimeout(() => {
-            emoji.remove();
-        }, duration * 1000);
-    }, 400); // Create a new emoji every 400ms
-}
-
-// Start the rain when the page loads
-window.addEventListener('load', initEmojiRain);
     </script>
 </body>
 </html>
