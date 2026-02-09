@@ -303,7 +303,7 @@
             line-height: 1.6;
         }
 
-        /* .message-line:first-child {
+        .message-line:first-child {
             font-size: 2.5rem;
             font-weight: bold;
             margin: 20px 0 30px 0;
@@ -311,7 +311,7 @@
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 
                          2px 2px 6px rgba(0,0,0,0.4);
             animation: glow 2s ease-in-out infinite;
-        } */
+        }
 
         @keyframes glow {
             0%, 100% { 
@@ -459,6 +459,20 @@
 
         .quiz-card.completed .status {
             color: white;
+        }
+
+        .quiz-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .quiz-card.locked::before {
+            display: none;
+        }
+
+        .quiz-card.locked .status {
+            color: #999;
         }
 
         /* Modal */
@@ -860,6 +874,7 @@
                 <button type="submit" class="login-btn">Enter Our Story ❤️</button>
                 <p class="error-message" id="errorMessage">Invalid credentials. Please try again!</p>
                 <span>Hint: USername is how to u call me"***a"<span>Password is how to i call u "***n" each text starts with caps</span></span>
+
             </form>
         </div>
     </div>
@@ -898,7 +913,7 @@
             <p id="finalText">Through every rose, every chocolate, every promise...<br>
             Through every hug, every kiss, every moment...<br>
             My love for you has only grown stronger.<br><br>
-            <strong>Will you marry me (Enoda saynthu kastapada Ready ah ?)? 💍</strong></p>
+            <strong>Will you marry me? 💍</strong></p>
             <div class="proposal-buttons">
                 <button class="proposal-btn yes-btn" onclick="handleYes()">Yes! 💕</button>
                 <button class="proposal-btn no-btn" id="noBtn" onmouseover="escapeButton(event)">No</button>
@@ -906,8 +921,8 @@
         </div>
 
         <div class="proposal-screen" id="proposalScreen">
-            <h2>Namalowda inthe a nama sweet ah start panalam 💍❤️</h2>
-            <p style="font-size: 1.3rem; color: #ffffff; margin-bottom: 20px;">Forever starts now, my queen! 👑</p>
+            <h2>She said YES! 💍❤️</h2>
+            <p style="font-size: 1.3rem; color: #f5576c; margin-bottom: 20px;">Forever starts now, my queen! 👑</p>
             <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=800" alt="Proposal" class="proposal-image" id="proposalImage">
             <br>
             <button class="goback-btn" onclick="goBackToCards()">View Our Journey Again 💕</button>
@@ -940,10 +955,10 @@
     <div class="sparkle-container" id="sparkleContainer"></div>
 
     <script>
-        // Login credentials 
+        // Login credentials (CHANGE THESE TO YOUR DESIRED VALUES)
         const CREDENTIALS = {
             username: "Bava",  
-            password: "Queen" 
+            password: "Queen"   
         };
 
         // Valentine's Week Dates (2026)
@@ -1077,86 +1092,86 @@
                     "Happy Chocolate Day, my sweet love! 🍫"
                 ]
             },
-            // 3: { // Teddy Day
-            //     title: "Teddy Day 🧸",
-            //     lines: [
-            //         "MY Queen 👑",
-            //         "",
-            //         "Just like a teddy bear brings comfort to a child,",
-            //         "you bring peace to my soul.",
-            //         "In your arms, I find my safest place,",
-            //         "my warmest embrace.",
-            //         "You're the cuddle I crave after a long day,",
-            //         "the softness I seek in a harsh world.",
-            //         "With you, I can be completely myself,",
-            //         "vulnerable yet protected.",
-            //         "Happy Teddy Day, my comfort! 🧸"
-            //     ]
-            // },
-            // 4: { // Promise Day
-            //     title: "Promise Day 🤞",
-            //     lines: [
-            //         "MY Queen 👑",
-            //         "",
-            //         "Today, I make promises that my heart has already kept.",
-            //         "I promise to choose you, every single day.",
-            //         "I promise to stand by you through storms and sunshine.",
-            //         "I promise to be your strength when you feel weak,",
-            //         "and to celebrate your victories as my own.",
-            //         "I promise to love you not just when it's easy,",
-            //         "but especially when it's hard.",
-            //         "These aren't just words, they're vows from my soul.",
-            //         "Happy Promise Day, my forever! 🤞"
-            //     ]
-            // },
-            // 5: { // Hug Day
-            //     title: "Hug Day 🤗",
-            //     lines: [
-            //         "MY Queen 👑",
-            //         "",
-            //         "In your embrace, I've found my home.",
-            //         "Not a place made of walls and doors,",
-            //         "but a feeling of absolute belonging.",
-            //         "Your hugs heal wounds that words cannot reach,",
-            //         "they speak a language deeper than speech.",
-            //         "Every time you hold me,",
-            //         "the world outside fades away.",
-            //         "In your arms, everything makes sense.",
-            //         "Happy Hug Day, my home! 🤗"
-            //     ]
-            // },
-            // 6: { // Kiss Day
-            //     title: "Kiss Day 💋",
-            //     lines: [
-            //         "MY Queen 👑",
-            //         "",
-            //         "Every kiss we share tells a story,",
-            //         "of passion, of promise, of forever.",
-            //         "Your lips speak to my soul in ways words never could.",
-            //         "Each kiss is a reminder that you're mine,",
-            //         "and I am yours, completely.",
-            //         "They seal our love with every touch,",
-            //         "igniting a fire that will never burn out.",
-            //         "In your kiss, I find infinity.",
-            //         "Happy Kiss Day, my passion! 💋"
-            //     ]
-            // },
-            // 7: { // Valentine's Day
-            //     title: "Valentine's Day ❤️",
-            //     lines: [
-            //         "MY Queen 👑",
-            //         "",
-            //         "This journey through Valentine's week,",
-            //         "has been a celebration of us.",
-            //         "From roses to promises, from hugs to kisses,",
-            //         "every day has brought us closer.",
-            //         "Today, on Valentine's Day,",
-            //         "I want to give you my forever.",
-            //         "You are my everything—",
-            //         "my love, my life, my reason to smile.",
-            //         "Happy Valentine's Day, my eternal love! ❤️"
-            //     ]
-            // }
+            3: { // Teddy Day
+                title: "Teddy Day 🧸",
+                lines: [
+                    "MY Queen 👑",
+                    "",
+                    "Just like a teddy bear brings comfort to a child,",
+                    "you bring peace to my soul.",
+                    "In your arms, I find my safest place,",
+                    "my warmest embrace.",
+                    "You're the cuddle I crave after a long day,",
+                    "the softness I seek in a harsh world.",
+                    "With you, I can be completely myself,",
+                    "vulnerable yet protected.",
+                    "Happy Teddy Day, my comfort! 🧸"
+                ]
+            },
+            4: { // Promise Day
+                title: "Promise Day 🤞",
+                lines: [
+                    "MY Queen 👑",
+                    "",
+                    "Today, I make promises that my heart has already kept.",
+                    "I promise to choose you, every single day.",
+                    "I promise to stand by you through storms and sunshine.",
+                    "I promise to be your strength when you feel weak,",
+                    "and to celebrate your victories as my own.",
+                    "I promise to love you not just when it's easy,",
+                    "but especially when it's hard.",
+                    "These aren't just words, they're vows from my soul.",
+                    "Happy Promise Day, my forever! 🤞"
+                ]
+            },
+            5: { // Hug Day
+                title: "Hug Day 🤗",
+                lines: [
+                    "MY Queen 👑",
+                    "",
+                    "In your embrace, I've found my home.",
+                    "Not a place made of walls and doors,",
+                    "but a feeling of absolute belonging.",
+                    "Your hugs heal wounds that words cannot reach,",
+                    "they speak a language deeper than speech.",
+                    "Every time you hold me,",
+                    "the world outside fades away.",
+                    "In your arms, everything makes sense.",
+                    "Happy Hug Day, my home! 🤗"
+                ]
+            },
+            6: { // Kiss Day
+                title: "Kiss Day 💋",
+                lines: [
+                    "MY Queen 👑",
+                    "",
+                    "Every kiss we share tells a story,",
+                    "of passion, of promise, of forever.",
+                    "Your lips speak to my soul in ways words never could.",
+                    "Each kiss is a reminder that you're mine,",
+                    "and I am yours, completely.",
+                    "They seal our love with every touch,",
+                    "igniting a fire that will never burn out.",
+                    "In your kiss, I find infinity.",
+                    "Happy Kiss Day, my passion! 💋"
+                ]
+            },
+            7: { // Valentine's Day
+                title: "Valentine's Day ❤️",
+                lines: [
+                    "MY Queen 👑",
+                    "",
+                    "This journey through Valentine's week,",
+                    "has been a celebration of us.",
+                    "From roses to promises, from hugs to kisses,",
+                    "every day has brought us closer.",
+                    "Today, on Valentine's Day,",
+                    "I want to give you my forever.",
+                    "You are my everything—",
+                    "my love, my life, my reason to smile.",
+                    "Happy Valentine's Day, my eternal love! ❤️"
+                ]
+            }
         };
 
         // Get current Valentine's day info
@@ -1181,12 +1196,30 @@
             if (currentDayIndex > 0) {
                 // Mark all previous days as completed
                 for (let i = 0; i < currentDayIndex; i++) {
-                    const card = document.querySelectorAll('.quiz-card')[i];
-                    if (card && !card.classList.contains('completed')) {
+                    const cards = document.querySelectorAll('.quiz-card');
+                    const card = cards[i];
+                    if (card && !card.classList.contains('completed') && !card.classList.contains('locked')) {
                         card.classList.add('completed');
                         card.querySelector('.status').textContent = 'Completed ✓';
                         completedQuizzes++;
                     }
+                }
+            }
+        }
+
+        // Unlock card for current day
+        function unlockCurrentDay() {
+            const today = new Date().toISOString().split('T')[0];
+            const currentDayIndex = VALENTINE_WEEK.findIndex(day => day.date === today);
+            
+            if (currentDayIndex !== -1) {
+                const cards = document.querySelectorAll('.quiz-card');
+                const currentCard = cards[currentDayIndex];
+                
+                if (currentCard && currentCard.classList.contains('locked')) {
+                    currentCard.classList.remove('locked');
+                    currentCard.querySelector('.status').textContent = 'Click to unlock';
+                    currentCard.onclick = () => openQuiz(currentDayIndex);
                 }
             }
         }
@@ -1365,9 +1398,10 @@
                 // Show opening animation
                 document.getElementById('openingScreen').classList.add('active');
                 
-                // Mark previous days as completed
+                // Mark previous days as completed and unlock current day
                 setTimeout(() => {
                     markPreviousDaysCompleted();
+                    unlockCurrentDay();
                 }, 100);
             } else {
                 errorMessage.classList.add('show');
@@ -1616,16 +1650,31 @@
         // Initialize quiz cards
         function initQuizCards() {
             const quizGrid = document.getElementById('quizGrid');
+            const today = new Date().toISOString().split('T')[0];
+            const currentDayIndex = VALENTINE_WEEK.findIndex(day => day.date === today);
+            
             quizData.forEach((quiz, index) => {
                 const card = document.createElement('div');
                 card.className = 'quiz-card';
+                
+                // Check if card should be locked
+                const isLocked = currentDayIndex !== -1 && index > currentDayIndex;
+                
+                if (isLocked) {
+                    card.classList.add('locked');
+                }
+                
                 card.innerHTML = `
                     <div class="emoji">${quiz.emoji}</div>
                     <h3>${quiz.day}</h3>
                     <div class="date">${quiz.date}</div>
-                    <div class="status">Click to unlock</div>
+                    <div class="status">${isLocked ? '🔒 Locked' : 'Click to unlock'}</div>
                 `;
-                card.onclick = () => openQuiz(index);
+                
+                if (!isLocked) {
+                    card.onclick = () => openQuiz(index);
+                }
+                
                 quizGrid.appendChild(card);
             });
         }
