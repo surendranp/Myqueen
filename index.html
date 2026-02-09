@@ -617,6 +617,31 @@
             text-align: center;
         }
 
+        .memory-img .hover-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(245, 87, 108, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.6;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .memory-img:hover .hover-text {
+            opacity: 1;
+        }
+
         .memory-img:nth-child(1) { animation-delay: 0.2s; }
         .memory-img:nth-child(2) { animation-delay: 0.4s; }
         .memory-img:nth-child(3) { animation-delay: 0.6s; }
@@ -873,8 +898,7 @@
                 </div>
                 <button type="submit" class="login-btn">Enter Our Story ❤️</button>
                 <p class="error-message" id="errorMessage">Invalid credentials. Please try again!</p>
-                <span>Hint: USername is how to u call me"***a"<span>Password is how to i call u "***n" each text starts with caps</span></span>
-
+                <span>Hitn: Uname is "***a", <br>Pass is "***en" <br>Both are strat from Caps</span>
             </form>
         </div>
     </div>
@@ -958,7 +982,7 @@
         // Login credentials (CHANGE THESE TO YOUR DESIRED VALUES)
         const CREDENTIALS = {
             username: "Bava",  
-            password: "Queen"   
+            password: "Queen"  
         };
 
         // Valentine's Week Dates (2026)
@@ -1308,47 +1332,346 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Predefined memory images (placeholder images - replace with actual image URLs)
+        // Predefined memory images - unique for each answer option
         const MEMORY_IMAGES = {
+            // Rose Day - Answer 1: The beauty of our first meeting
+            '0-0': [
+                'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400',
+                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400',
+                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
+                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400'
+            ],
+            // Rose Day - Answer 2: The passion that grows each day
+            '0-1': [
+                'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400',
+                'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400',
+                'https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400',
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400'
+            ],
+            // Rose Day - Answer 3: The delicate care we share
+            '0-2': [
+                'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400',
+                'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400',
+                'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=400',
+                'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400'
+            ],
+            
+            // Propose Day - Answer 1: Your unconditional love
+            '1-0': [
+                'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400',
+                'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400',
+                'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400',
+                'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400'
+            ],
+            // Propose Day - Answer 2: The dreams we share
+            '1-1': [
+                'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400',
+                'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400',
+                'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=400',
+                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400'
+            ],
+            // Propose Day - Answer 3: The way you make me feel
+            '1-2': [
+                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
+                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
+                'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400',
+                'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400'
+            ],
+            
+            // Chocolate Day - Answer 1: Sweeter than the finest chocolate
+            '2-0': [
+                'https://images.unsplash.com/photo-1511381939415-e44015466834?w=400',
+                'https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400',
+                'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=400',
+                'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400'
+            ],
+            // Chocolate Day - Answer 2: A perfect blend of sweet moments
+            '2-1': [
+                'https://images.unsplash.com/photo-1606312619070-d48b4cde5b5e?w=400',
+                'https://images.unsplash.com/photo-1589636136271-e2d029d74c4c?w=400',
+                'https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400',
+                'https://images.unsplash.com/photo-1511381939415-e44015466834?w=400'
+            ],
+            // Chocolate Day - Answer 3: Sweet enough to last a lifetime
+            '2-2': [
+                'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=400',
+                'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400',
+                'https://images.unsplash.com/photo-1606312619070-d48b4cde5b5e?w=400',
+                'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400'
+            ],
+            
+            // Teddy Day - Answer 1: A safe place to be myself
+            '3-0': [
+                'https://images.unsplash.com/photo-1527335480088-278dbeec0ad5?w=400',
+                'https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400',
+                'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=400',
+                'https://images.unsplash.com/photo-1551501401-4a07b1f3cd6e?w=400'
+            ],
+            // Teddy Day - Answer 2: Warmth in difficult times
+            '3-1': [
+                'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400',
+                'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400',
+                'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400',
+                'https://images.unsplash.com/photo-1527335480088-278dbeec0ad5?w=400'
+            ],
+            // Teddy Day - Answer 3: A constant source of joy
+            '3-2': [
+                'https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400',
+                'https://images.unsplash.com/photo-1551501401-4a07b1f3cd6e?w=400',
+                'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=400',
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400'
+            ],
+            
+            // Promise Day - Answer 1: To always choose us
+            '4-0': [
+                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400',
+                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
+                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
+                'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400'
+            ],
+            // Promise Day - Answer 2: To grow together
+            '4-1': [
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400',
+                'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400',
+                'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400',
+                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400'
+            ],
+            // Promise Day - Answer 3: To love you endlessly
+            '4-2': [
+                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
+                'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400',
+                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
+                'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400'
+            ],
+            
+            // Hug Day - Answer 1: Home in your arms
+            '5-0': [
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400',
+                'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400',
+                'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400',
+                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400'
+            ],
+            // Hug Day - Answer 2: Healing and comfort
+            '5-1': [
+                'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400',
+                'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400',
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400',
+                'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400'
+            ],
+            // Hug Day - Answer 3: Pure connection
+            '5-2': [
+                'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400',
+                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
+                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400',
+                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400'
+            ],
+            
+            // Kiss Day - Answer 1: How deeply I'm cherished
+            '6-0': [
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400',
+                'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400',
+                'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400',
+                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400'
+            ],
+            // Kiss Day - Answer 2: The passion we share
+            '6-1': [
+                'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400',
+                'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400',
+                'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400',
+                'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400'
+            ],
+            // Kiss Day - Answer 3: Forever isn't long enough
+            '6-2': [
+                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
+                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400',
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400',
+                'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400'
+            ],
+            
+            // Valentine's Day - Answer 1: Yes, forever and always
+            '7-0': [
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400',
+                'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400',
+                'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400',
+                'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400'
+            ],
+            // Valentine's Day - Answer 2: You're my everything
+            '7-1': [
+                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400',
+                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
+                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
+                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400'
+            ],
+            // Valentine's Day - Answer 3: Let's write our forever
+            '7-2': [
+                'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400',
+                'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400',
+                'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400',
+                'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400'
+            ]
+        };
+
+        // Romantic hover messages for each day and answer option
+        const HOVER_MESSAGES = {
             // Rose Day
-            '0-0': ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400', 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400', 'https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400'],
-            '0-1': ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400', 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400', 'https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400'],
-            '0-2': ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400', 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400', 'https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400'],
+            '0-0': [ // Answer 1: The beauty of our first meeting
+                'The moment our eyes first met 🌹',
+                'When I knew you were special',
+                'Our beautiful beginning',
+                'Love at first sight was real'
+            ],
+            '0-1': [ // Answer 2: The passion that grows each day
+                'Every day, my love grows stronger 🌹',
+                'Passion burning brighter each moment',
+                'Our fire never fades',
+                'More in love every sunrise'
+            ],
+            '0-2': [ // Answer 3: The delicate care we share
+                'Nurturing our love with care 🌹',
+                'Gentle moments, tender touches',
+                'We grow together beautifully',
+                'Carefully tending to our garden'
+            ],
             
             // Propose Day
-            '1-0': ['https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400', 'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400', 'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400', 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=400'],
-            '1-1': ['https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400', 'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400', 'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400', 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=400'],
-            '1-2': ['https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400', 'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?w=400', 'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=400', 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=400'],
+            '1-0': [ // Answer 1: Your unconditional love
+                'You accept all of me 💍',
+                'Loved for who I truly am',
+                'No conditions, just pure love',
+                'You celebrate my flaws'
+            ],
+            '1-1': [ // Answer 2: The dreams we share
+                'Building our future together 💍',
+                'Dreams becoming reality',
+                'Our shared vision of forever',
+                'Two dreamers, one dream'
+            ],
+            '1-2': [ // Answer 3: The way you make me feel
+                'You bring out my best 💍',
+                'Happiness radiates from within',
+                'Seen, heard, and cherished',
+                'My truest self with you'
+            ],
             
             // Chocolate Day
-            '2-0': ['https://images.unsplash.com/photo-1511381939415-e44015466834?w=400', 'https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400', 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=400', 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400'],
-            '2-1': ['https://images.unsplash.com/photo-1511381939415-e44015466834?w=400', 'https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400', 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=400', 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400'],
-            '2-2': ['https://images.unsplash.com/photo-1511381939415-e44015466834?w=400', 'https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400', 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=400', 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400'],
+            '2-0': [ // Answer 1: Sweeter than the finest chocolate
+                'Rich, indulgent, irresistible 🍫',
+                'Smooth as silk, sweet as sugar',
+                'My delicious addiction',
+                'Pure bliss in every moment'
+            ],
+            '2-1': [ // Answer 2: A perfect blend of sweet moments
+                'Sometimes dark, always delicious 🍫',
+                'A blend of laughter and love',
+                'Perfectly balanced sweetness',
+                'Discovering new flavors daily'
+            ],
+            '2-2': [ // Answer 3: Sweet enough to last a lifetime
+                'Sweetness that never expires 🍫',
+                'Growing richer with time',
+                'Forever my favorite flavor',
+                'Everlasting indulgence'
+            ],
             
             // Teddy Day
-            '3-0': ['https://images.unsplash.com/photo-1527335480088-278dbeec0ad5?w=400', 'https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400', 'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=400', 'https://images.unsplash.com/photo-1551501401-4a07b1f3cd6e?w=400'],
-            '3-1': ['https://images.unsplash.com/photo-1527335480088-278dbeec0ad5?w=400', 'https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400', 'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=400', 'https://images.unsplash.com/photo-1551501401-4a07b1f3cd6e?w=400'],
-            '3-2': ['https://images.unsplash.com/photo-1527335480088-278dbeec0ad5?w=400', 'https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400', 'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=400', 'https://images.unsplash.com/photo-1551501401-4a07b1f3cd6e?w=400'],
+            '3-0': [ // Answer 1: A safe place to be myself
+                'My sanctuary in your arms 🧸',
+                'Complete authenticity, no masks',
+                'Security in being vulnerable',
+                'Just being me with you'
+            ],
+            '3-1': [ // Answer 2: Warmth in difficult times
+                'Your warmth melts my fears 🧸',
+                'Comfort in the storm',
+                'Tears turned to smiles',
+                'My shelter, my peace'
+            ],
+            '3-2': [ // Answer 3: A constant source of joy
+                'My daily dose of happiness 🧸',
+                'Instant comfort, endless joy',
+                'Cuddles that heal everything',
+                'My favorite happy place'
+            ],
             
             // Promise Day
-            '4-0': ['https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400', 'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400'],
-            '4-1': ['https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400', 'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400'],
-            '4-2': ['https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400', 'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400'],
+            '4-0': [ // Answer 1: To always choose us
+                'Choosing us, every single day 🤞',
+                'Worth fighting for always',
+                'Our love is my priority',
+                'Through challenges, I choose you'
+            ],
+            '4-1': [ // Answer 2: To grow together
+                'Growing as individuals, together 🤞',
+                'Supporting each other\'s dreams',
+                'Celebrating every victory',
+                'Becoming our best selves'
+            ],
+            '4-2': [ // Answer 3: To love you endlessly
+                'Love in big and small moments 🤞',
+                'Through highs and lows',
+                'Young and old, always',
+                'Boundless, endless love'
+            ],
             
             // Hug Day
-            '5-0': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400'],
-            '5-1': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400'],
-            '5-2': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400', 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400'],
+            '5-0': [ // Answer 1: Home in your arms
+                'Where I truly belong 🤗',
+                'Home is not a place, it\'s you',
+                'Perfect peace in your embrace',
+                'My favorite place on earth'
+            ],
+            '5-1': [ // Answer 2: Healing and comfort
+                'Your hugs mend my soul 🤗',
+                'Broken days become whole',
+                'Anxieties fade away',
+                'Everything feels lighter'
+            ],
+            '5-2': [ // Answer 3: Pure connection
+                'Heart to heart, soul to soul 🤗',
+                'Words become unnecessary',
+                'Completely understood',
+                'Our silent language of love'
+            ],
             
             // Kiss Day
-            '6-0': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400'],
-            '6-1': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400'],
-            '6-2': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=400', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400'],
+            '6-0': [ // Answer 1: How deeply I'm cherished
+                'Treasured beyond measure 💋',
+                'Love letters on my lips',
+                'I am adored, precious',
+                'Your universe, your everything'
+            ],
+            '6-1': [ // Answer 2: The passion we share
+                'Sparks that never dim 💋',
+                'Electric, passionate connection',
+                'Hearts racing together',
+                'Eternal fire burning bright'
+            ],
+            '6-2': [ // Answer 3: Forever isn't long enough
+                'One lifetime won\'t suffice 💋',
+                'Infinite tomorrows promised',
+                'Love transcending time',
+                'Our eternal bond sealed'
+            ],
             
             // Valentine's Day
-            '7-0': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400'],
-            '7-1': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400'],
-            '7-2': ['https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400', 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?w=400', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400']
+            '7-0': [ // Answer 1: Yes, forever and always
+                'Today, tomorrow, forever ❤️',
+                'Through every season of life',
+                'My answer is yes, always',
+                'Yes to our eternal love'
+            ],
+            '7-1': [ // Answer 2: You're my everything
+                'My love, friend, everything ❤️',
+                'The missing piece found',
+                'My comfort and adventure',
+                'Everything I never knew I needed'
+            ],
+            '7-2': [ // Answer 3: Let's write our forever
+                'Our story just beginning ❤️',
+                'Pages filled with love',
+                'Hand in hand, always',
+                'The greatest story ever told'
+            ]
         };
 
         // Create sparkles animation (now hearts)
@@ -1716,15 +2039,20 @@
             const imageKey = `${quizIndex}-${answerIndex}`;
             const images = MEMORY_IMAGES[imageKey] || [];
             
+            // Get hover messages for this specific answer
+            const hoverMessages = HOVER_MESSAGES[imageKey] || [];
+            
             let imagesHTML = '';
             
             for (let i = 0; i < answer.images; i++) {
                 const imageSrc = images[i];
+                const hoverText = hoverMessages[i] || 'A precious memory 💕';
                 
                 if (imageSrc) {
                     imagesHTML += `
                         <div class="memory-img" onclick="viewImageInLightbox(${quizIndex}, ${answerIndex}, ${i})">
                             <img src="${imageSrc}" alt="Memory ${i + 1}">
+                            <div class="hover-text">${hoverText}</div>
                             <div class="image-label">Memory ${i + 1}</div>
                         </div>
                     `;
