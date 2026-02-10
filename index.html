@@ -898,7 +898,8 @@
                 </div>
                 <button type="submit" class="login-btn">Enter Our Story ❤️</button>
                 <p class="error-message" id="errorMessage">Invalid credentials. Please try again!</p>
-                <span>Hitn: Uname "Your my ______",*********g  <br>Pass "I'm Your_____",******d <br>Both are strat from Caps</span>
+                <span>Hint:Uname(What ever i'm always be with---- "**u")<br>Pass: (Trsut me i Promise You my___"****n") <br>Both are strat from Caps</span>
+
             </form>
         </div>
     </div>
@@ -981,8 +982,8 @@
     <script>
         // Login credentials (CHANGE THESE TO YOUR DESIRED VALUES)
         const CREDENTIALS = {
-            username: "Everything",  
-            password: "Husband"  
+            username: "You",   
+            password: "Queen"   
         };
 
         // Valentine's Week Dates (2026)
@@ -1200,22 +1201,44 @@
 
         // Get current Valentine's day info
         function getCurrentValentineDay() {
-            const today = new Date().toISOString().split('T')[0];
+            // Get current date in YYYY-MM-DD format
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const today = `${year}-${month}-${day}`;
+            
+            console.log('Current date:', today); // Debug log
+            
+            // Find the matching day
             const currentDay = VALENTINE_WEEK.find(day => day.date === today);
             
             if (currentDay) {
+                console.log('Found matching day:', currentDay.name); // Debug log
                 return currentDay;
             }
             
-            // If not in Valentine's week, return the first day for testing
-            // Remove this in production or set to null
-            return VALENTINE_WEEK[1]; // Default to Propose Day for testing
+            // If not in Valentine's week, return null or for testing return a default day
+            console.log('No matching Valentine day found for:', today); // Debug log
+            
+            // For testing purposes - REMOVE THIS LINE in production
+            // return VALENTINE_WEEK[1]; // Default to Propose Day for testing
+            
+            // Return null if outside Valentine's week
+            return null;
         }
 
         // Mark previous days as completed
         function markPreviousDaysCompleted() {
-            const today = new Date().toISOString().split('T')[0];
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const today = `${year}-${month}-${day}`;
+            
             const currentDayIndex = VALENTINE_WEEK.findIndex(day => day.date === today);
+            
+            console.log('Marking completed for today:', today, 'Index:', currentDayIndex); // Debug log
             
             if (currentDayIndex > 0) {
                 // Mark all previous days as completed
@@ -1226,6 +1249,7 @@
                         card.classList.add('completed');
                         card.querySelector('.status').textContent = 'Completed ✓';
                         completedQuizzes++;
+                        console.log('Marked day', i, 'as completed'); // Debug log
                     }
                 }
             }
@@ -1233,8 +1257,15 @@
 
         // Unlock card for current day
         function unlockCurrentDay() {
-            const today = new Date().toISOString().split('T')[0];
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const today = `${year}-${month}-${day}`;
+            
             const currentDayIndex = VALENTINE_WEEK.findIndex(day => day.date === today);
+            
+            console.log('Unlocking current day:', today, 'Index:', currentDayIndex); // Debug log
             
             if (currentDayIndex !== -1) {
                 const cards = document.querySelectorAll('.quiz-card');
@@ -1244,6 +1275,7 @@
                     currentCard.classList.remove('locked');
                     currentCard.querySelector('.status').textContent = 'Click to unlock';
                     currentCard.onclick = () => openQuiz(currentDayIndex);
+                    console.log('Unlocked day', currentDayIndex); // Debug log
                 }
             }
         }
@@ -1251,7 +1283,23 @@
         // Update opening screen content based on current day
         function updateOpeningScreenContent() {
             const currentDay = getCurrentValentineDay();
-            if (!currentDay) return;
+            
+            if (!currentDay) {
+                console.log('No current Valentine day found - displaying default message');
+                // If outside Valentine's week, show a default message
+                const titleElement = document.querySelector('.opening-title');
+                const messageContainer = document.querySelector('.love-message');
+                
+                titleElement.textContent = "Our Love Story ❤️";
+                messageContainer.innerHTML = `
+                    <div class="message-line" style="animation: lineAppear 0.8s ease-in-out 7s forwards;">Valentine's Week is coming soon!</div>
+                    <div class="message-line" style="animation: lineAppear 0.8s ease-in-out 7.6s forwards;">Our journey begins February 7, 2026</div>
+                    <button class="continue-btn" onclick="startJourney()" style="animation: btnAppear 1s ease-in-out 9s forwards;">Continue 💕</button>
+                `;
+                return;
+            }
+            
+            console.log('Updating opening screen for:', currentDay.name); // Debug log
             
             const messages = OPENING_MESSAGES[currentDay.index];
             const titleElement = document.querySelector('.opening-title');
@@ -1372,10 +1420,11 @@
             ],
             // Propose Day - Answer 3: The way you make me feel
             '1-2': [
-                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
-                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
-                'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400',
-                'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400'
+                // 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
+                // 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
+                // 'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400',
+                // 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400'
+                
             ],
             
             // Chocolate Day - Answer 1: Sweeter than the finest chocolate
@@ -1424,24 +1473,24 @@
             
             // Promise Day - Answer 1: To always choose us
             '4-0': [
-                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400',
-                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
-                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
-                'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400'
+                'images/Choosus-1.jpg',
+                'images/Choosus-2.jpg',
+                'images/Choosus-3.jpg',
+                'images/Choosus-4.jpeg'
             ],
             // Promise Day - Answer 2: To grow together
             '4-1': [
-                'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400',
-                'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400',
-                'https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=400',
-                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400'
+                'images/Grow-1.jpeg',
+                'images/Grow-2.jpg',
+                'images/Grow-3.jpg',
+                'images/Grow-4.jpeg'
             ],
             // Promise Day - Answer 3: To love you endlessly
             '4-2': [
-                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400',
-                'https://images.unsplash.com/photo-1516934024742-b461fba47600?w=400',
-                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400',
-                'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400'
+                'images/endless-1.jpg',
+                'images/endless-2.jpg',
+                'images/endless-3.jpg',
+                'images/endless-4.jpg'
             ],
             
             // Hug Day - Answer 1: Home in your arms
@@ -1973,8 +2022,15 @@
         // Initialize quiz cards
         function initQuizCards() {
             const quizGrid = document.getElementById('quizGrid');
-            const today = new Date().toISOString().split('T')[0];
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const today = `${year}-${month}-${day}`;
+            
             const currentDayIndex = VALENTINE_WEEK.findIndex(day => day.date === today);
+            
+            console.log('Initializing cards for date:', today, 'Current day index:', currentDayIndex); // Debug log
             
             quizData.forEach((quiz, index) => {
                 const card = document.createElement('div');
@@ -1999,6 +2055,7 @@
                 }
                 
                 quizGrid.appendChild(card);
+                console.log('Card', index, 'created. Locked:', isLocked); // Debug log
             });
         }
 
